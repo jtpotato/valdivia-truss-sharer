@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Easy instructions and tools for moving Valdivia trusses in and out."
+    />
+    <title>Valdivia Truss Sharer</title>
+    <style>
+      :root {
+        --ink: #17324d;
+        --muted: #60758b;
+        --blue: #2563eb;
+        --blue-dark: #1746ae;
+        --sky: #eaf3ff;
+        --line: #d7e2ee;
+        --paper: #ffffff;
+        --bg: #f5f8fc;
+        --green: #0d8a62;
+        --shadow: 0 16px 40px rgba(30, 63, 97, 0.09);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--bg);
+        font:
+          16px/1.55 system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+      }
+      a {
+        color: var(--blue);
+      }
+      .top {
+        background: linear-gradient(135deg, #12385d, #205b96);
+        color: white;
+      }
+      .wrap {
+        width: min(100% - 32px, 1080px);
+        margin: 0 auto;
+      }
+      header {
+        padding: 62px 0 54px;
+      }
+      .eyebrow {
+        color: #b9dcff;
+        font-size: 0.8rem;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      h1 {
+        max-width: 700px;
+        margin: 10px 0 12px;
+        font-size: clamp(2.35rem, 6vw, 4.6rem);
+        line-height: 1.02;
+        letter-spacing: -0.05em;
+      }
+      .lead {
+        max-width: 640px;
+        margin: 0;
+        color: #d7e9fb;
+        font-size: 1.15rem;
+      }
+      main {
+        padding: 38px 0 70px;
+      }
+      .notice {
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        margin: 0 0 30px;
+        padding: 17px 20px;
+        border: 1px solid #b9d6f8;
+        border-radius: 15px;
+        background: var(--sky);
+      }
+      .notice strong {
+        display: block;
+        margin-bottom: 2px;
+      }
+      .notice p {
+        margin: 0;
+        color: #385874;
+      }
+      .icon {
+        display: grid;
+        place-items: center;
+        min-width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: var(--blue);
+        color: white;
+        font-weight: 800;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+      }
+      .card {
+        padding: 28px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: var(--paper);
+        box-shadow: var(--shadow);
+      }
+      .card h2 {
+        margin: 0 0 8px;
+        font-size: 1.55rem;
+        letter-spacing: -0.025em;
+      }
+      .card > p {
+        margin: 0 0 22px;
+        color: var(--muted);
+      }
+      .step {
+        display: flex;
+        gap: 12px;
+        margin: 19px 0;
+      }
+      .num {
+        display: grid;
+        place-items: center;
+        flex: 0 0 27px;
+        height: 27px;
+        border-radius: 50%;
+        background: #dceaff;
+        color: var(--blue-dark);
+        font-weight: 800;
+      }
+      .step p {
+        margin: 1px 0 0;
+      }
+      label {
+        display: block;
+        margin: 16px 0 7px;
+        font-weight: 750;
+      }
+      input,
+      textarea {
+        width: 100%;
+        border: 1px solid #b9c9da;
+        border-radius: 10px;
+        padding: 11px 12px;
+        color: var(--ink);
+        background: #fbfdff;
+        font: inherit;
+      }
+      input:focus,
+      textarea:focus {
+        outline: 3px solid #cfe1ff;
+        border-color: var(--blue);
+      }
+      textarea {
+        min-height: 125px;
+        resize: vertical;
+        font:
+          13px/1.5 ui-monospace,
+          SFMono-Regular,
+          Menlo,
+          Consolas,
+          monospace;
+      }
+      .button-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+        margin-top: 12px;
+      }
+      button {
+        cursor: pointer;
+        border: 0;
+        border-radius: 9px;
+        padding: 10px 14px;
+        color: white;
+        background: var(--blue);
+        font: inherit;
+        font-weight: 750;
+      }
+      button:hover {
+        background: var(--blue-dark);
+      }
+      button.secondary {
+        color: var(--ink);
+        background: #edf3f9;
+      }
+      button.secondary:hover {
+        background: #dce8f3;
+      }
+      .hint {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+      code {
+        padding: 2px 5px;
+        border-radius: 5px;
+        background: #edf3f9;
+        font-size: 0.9em;
+      }
+      .full {
+        grid-column: 1 / -1;
+      }
+      .saved {
+        display: none;
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid var(--line);
+      }
+      .saved.show {
+        display: block;
+      }
+      .saved h3 {
+        margin: 0 0 8px;
+      }
+      .saved-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .saved-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid #edf2f7;
+      }
+      .saved-list small {
+        color: var(--muted);
+      }
+      .empty {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+      footer {
+        padding: 30px 0 50px;
+        color: var(--muted);
+        text-align: center;
+        font-size: 0.9rem;
+      }
+      #status {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        z-index: 2;
+        display: none;
+        max-width: min(360px, calc(100% - 36px));
+        padding: 12px 15px;
+        border-radius: 10px;
+        color: white;
+        background: #17324d;
+        box-shadow: var(--shadow);
+      }
+      #status.show {
+        display: block;
+      }
+      @media (max-width: 760px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        .full {
+          grid-column: auto;
+        }
+        header {
+          padding: 44px 0 38px;
+        }
+        .card {
+          padding: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <section class="grid" aria-label="Truss tools">
+        <article class="card">
+          <h2>Copy a truss out</h2>
+          <div class="step">
+            <p>Type the truss name exactly as it appears in Valdivia.</p>
+          </div>
+          <label for="pullName">Truss name</label>
+          <input
+            id="pullName"
+            placeholder="e.g. roof-main"
+            autocomplete="off"
+          />
+          <div class="button-row">
+            <button id="copyPull">Copy Valdivia command</button>
+          </div>
+          <div class="step">
+            <p>
+              In Valdivia, open its developer console, paste the command, and
+              press Enter. It copies the truss data to your clipboard.
+            </p>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>Copy a truss in</h2>
+          <p>
+            Paste saved truss text here and get a ready-to-copy command for
+            Valdivia.
+          </p>
+          <div class="step">
+            <p>
+              Paste the truss text below and choose the name you want to use in
+              Valdivia.
+            </p>
+          </div>
+          <label for="putName">Name to use in Valdivia</label>
+          <input id="putName" placeholder="e.g. roof-main" autocomplete="off" />
+          <label for="putData">Truss text</label>
+          <textarea
+            id="putData"
+            placeholder="P 0 0|P 65.98 112.012|..."
+            spellcheck="false"
+          ></textarea>
+          <div class="button-row">
+            <button id="copyPut">Copy Valdivia command</button>
+          </div>
+          <div class="step">
+            <p>
+              In Valdivia’s developer console, paste the command and press
+              Enter. Reload Valdivia if the truss list does not update
+              immediately.
+            </p>
+          </div>
+        </article>
+      </section>
+    </main>
+    <footer>Valdivia Truss Sharer · Works entirely in your browser</footer>
+    <div id="status" role="status" aria-live="polite"></div>
+
+    <script>
+      const $ = (id) => document.getElementById(id);
+      const storagePrefix = "trs.";
+      let statusTimer;
+      function say(message) {
+        const box = $("status");
+        box.textContent = message;
+        box.classList.add("show");
+        clearTimeout(statusTimer);
+        statusTimer = setTimeout(() => box.classList.remove("show"), 3200);
+      }
+      function cleanName(value) {
+        return value
+          .trim()
+          .replace(/^trs\./i, "")
+          .replace(/[\\/:*?"<>|]/g, "-")
+          .trim();
+      }
+      function keyFor(name) {
+        return storagePrefix + cleanName(name);
+      }
+      function validData(data) {
+        return (
+          data.trim().length > 0 && /(?:^|\\|)[PEMLF]\\s/.test(data.trim())
+        );
+      }
+      function valdiviaGetCommand(name) {
+        return `copy(localStorage.getItem(${JSON.stringify(keyFor(name))}))`;
+      }
+      function valdiviaPutCommand(name, data) {
+        return `localStorage.setItem(${JSON.stringify(keyFor(name))}, ${JSON.stringify(data.trim())})`;
+      }
+      async function copy(text, message) {
+        try {
+          await navigator.clipboard.writeText(text);
+          say(message);
+        } catch {
+          say("Copy was blocked. Select the command and copy it manually.");
+        }
+      }
+      $("copyPull").onclick = () => {
+        const name = cleanName($("pullName").value);
+        if (!name) return say("Enter the truss name first.");
+        copy(
+          valdiviaGetCommand(name),
+          "Command copied. Paste it into Valdivia’s console.",
+        );
+      };
+      $("copyPut").onclick = () => {
+        const name = cleanName($("putName").value);
+        const data = $("putData").value;
+        copy(
+          valdiviaPutCommand(name, data),
+          "Command copied. Paste it into Valdivia’s console.",
+        );
+      };
+    </script>
+  </body>
+</html>
